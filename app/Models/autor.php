@@ -10,4 +10,9 @@ class autor extends Model
     use HasFactory;
     protected $table = 'autor';
     protected $fillabel = ['nombre','nacionalidad'];
+
+
+    public function libro(){
+        return $this->belognsTo(libro::class,'autor_id');
+    }
 }

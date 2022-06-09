@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\libro;//importamos  el modelo 
-
+use App\Models\autor;
 
 class libroController extends Controller
 {
@@ -16,8 +16,13 @@ class libroController extends Controller
     public function index()
     {
         $libros  = libro::all();//traemos todos los reguitros
+        $data = [];
+        foreach ($libros as $libro) {
+            $libro->autor_id=autor::find($libro->autor_id);
+            array_push($data,$libro);
+        }
 
-        return response()->json($libros,200);
+        return response()->json(['libros'=>$data],200);
         //primer parametro los datos y de segundo el status
     }
 
@@ -41,10 +46,11 @@ class libroController extends Controller
     {
         $libro = new libro();// se crea una nueva instancia 
         $libro->titulo = $request->titulo;// asignamos lo valores del request
-        $libro->autor = $request->autor;
+        $libro->autor_id = $request->autor_id;
         $libro->numero_paginas = $request->numero_paginas;
         $libro->precio = $request->precio;
         $libro->estado = $request->estado;
+        
 
         $libro->save();//se guarda  el reguistro
         return response()->json($libro,201);
@@ -59,7 +65,12 @@ class libroController extends Controller
     public function show($id)
     {
         $libro = libro::findOrFail($id);
-        return response()->json($libro,200);
+        $libro->autor_id=autor::find($libro->autor_id);
+        $data = [
+            'libro'=>$libro,
+            // 'autor'=>$autor
+        ];
+        return response()->json($data,200);
 
     }
 

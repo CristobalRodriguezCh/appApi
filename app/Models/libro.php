@@ -13,7 +13,7 @@ class libro extends Model
 
     //relacion 1 a muchos con autores
     public function autores(){
-        return $this->hasMany('App\Models\autor','autor_id');
+        return $this->hasMany('App\Models\autor','id');
     }
 
     //relacion muchos a muchos con bibliotea

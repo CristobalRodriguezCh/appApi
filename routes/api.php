@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\libroController;
+use App\Http\Controllers\autorController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,3 +30,7 @@ Route::post('libros','App\Http\Controllers\libroController@store');
 Route::put('libros/{id}','App\Http\Controllers\libroController@update');
 Route::delete('/libros/{id}','App\Http\Controllers\libroController@destroy');
 
+
+Route::get('autores',[autorController::class,'index']);
+Route::get('autor/{id}','App\Http\Controllers\autorController@show');
+Route::post('autor','App\Http\Controllers\autorController@store');
